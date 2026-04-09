@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MapContainer, Polygon, TileLayer, useMapEvents, useMap } from "react-leaflet";
+import { MapContainer, Polygon, Polyline, TileLayer, useMapEvents, useMap } from "react-leaflet";
 
 const DEMO_POLYGON = [
   [22.315, 72.548],
@@ -50,31 +50,16 @@ function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap, points
           positions={activePositions}
           pathOptions={{ color: "#2f9f31", fillColor: "#5fbf66", fillOpacity: 0.28 }}
         />
+        {showRows && previewLines && previewLines.map((lineCoords, idx) => (
+          <Polyline 
+            key={idx} 
+            positions={lineCoords} 
+            pathOptions={{ color: '#007AFF', weight: 2, dashArray: '4, 4', opacity: 0.5 }} 
+          />
+        ))}
         <MapBounds positions={activePositions} />
         <TapHandler onTap={onDemoTap} />
       </MapContainer>
-      {showRows && (
-        <div className="pointer-events-none absolute inset-0">
-          {previewLines.map((line) => {
-            const lineStyle =
-              line.orientation === "vertical"
-                ? { left: `${line.positionPercent}%`, top: "12%", bottom: "12%" }
-                : { top: `${line.positionPercent}%`, left: "12%", right: "12%" };
-
-            return (
-              <span
-                key={line.id}
-                className={`absolute ${
-                  line.orientation === "vertical" 
-                    ? "w-[2px] border-l-2 border-dashed border-[#007AFF] opacity-40" 
-                    : "h-[2px] border-t-2 border-dashed border-[#007AFF] opacity-40"
-                }`}
-                style={lineStyle}
-              />
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }

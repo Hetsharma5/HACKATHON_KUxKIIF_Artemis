@@ -1,10 +1,10 @@
 import { getAreaSummary } from "./area";
-import { createPreviewLines, getRowCount } from "./layout";
+import { createGeospatialPreviewLines, getRowCount } from "./layout";
 
 const FERTILIZER_PRICE_PER_KG = 25;
 const LABOR_COST_PER_ACRE = 3000;
 
-export function generatePlanMetrics({ areaSqM, crop, orientation, previousCrop }) {
+export function generatePlanMetrics({ areaSqM, points, crop, orientation, previousCrop }) {
   if (!crop) {
     return null;
   }
@@ -48,6 +48,6 @@ export function generatePlanMetrics({ areaSqM, crop, orientation, previousCrop }
     estimatedRevenue,
     estimatedCost: totalCost,
     estimatedProfit,
-    previewLines: createPreviewLines(rowInfo.rowCount, rowInfo.orientation),
+    previewLines: createGeospatialPreviewLines(points, crop.rowSpacingCm, rowInfo.orientation),
   };
 }

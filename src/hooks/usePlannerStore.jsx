@@ -30,6 +30,7 @@ export function PlannerProvider({ children }) {
 
   const estimates = generatePlanMetrics({
     areaSqM: fieldAreaSqM,
+    points,
     crop,
     orientation,
     previousCrop,

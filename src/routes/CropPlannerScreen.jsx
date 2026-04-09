@@ -6,6 +6,7 @@ import BottomActionBar from "../components/BottomActionBar";
 import CropCard from "../components/CropCard";
 import ScreenContainer from "../components/ScreenContainer";
 import StatCard from "../components/StatCard";
+import StaticFieldMap from "../components/StaticFieldMap";
 import { usePlannerStore } from "../hooks/usePlannerStore";
 import { formatNumber } from "../utils/format";
 
@@ -28,7 +29,9 @@ function CropPlannerScreen() {
     isGenerating,
     setIsGenerating,
     activeLandId,
-    savedLands
+    savedLands,
+    estimates,
+    points
   } = usePlannerStore();
 
   const cropEntries = useMemo(() => Object.entries(cropsData), [cropsData]);
@@ -125,6 +128,15 @@ function CropPlannerScreen() {
             <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">Est. Seed rate</span> <span>{selectedCrop.seedRateKgPerAcre} kg/acre</span></p>
             <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">Fertilizer</span> <span>{selectedCrop.fertilizerKgPerAcre} kg/acre</span></p>
             <p className="flex justify-between"><span className="text-[#6B7280]">Potential yield</span> <span className="text-[#10B981] font-bold">{selectedCrop.yieldQuintalPerAcre} q/acre</span></p>
+          </div>
+          
+          <div className="mt-4 pt-4 border-t border-gray-100">
+             <h3 className="font-heading text-sm font-bold text-leaf-900 mb-2">
+               Live Layout Preview
+             </h3>
+             <div className="h-64 sm:h-72 w-full overflow-hidden rounded-xl border border-leaf-200 shadow-sm relative">
+               <StaticFieldMap showRows={true} previewLines={estimates?.previewLines || []} points={points} />
+             </div>
           </div>
         </section>
       </div>
