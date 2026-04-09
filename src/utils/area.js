@@ -28,7 +28,9 @@ export function getAreaFromPolygonPoints(points) {
     return 0;
   }
 
-  const closedRing = [...points, points[0]];
+  // Leaflet uses [lat, lng], but Turf requires [lng, lat] for GeoJSON
+  const turfPoints = points.map(p => [p[1], p[0]]);
+  const closedRing = [...turfPoints, turfPoints[0]];
   const turfPoly = turfPolygon([closedRing]);
   return turfArea(turfPoly);
 }

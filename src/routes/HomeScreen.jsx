@@ -24,12 +24,11 @@ function HomeScreen() {
 
   return (
     <ScreenContainer
-      title="KhetPlan"
+      title="KisanSarthi"
       subtitle="Smart plantation blueprint for every farmer"
     >
       <section className="animate-rise rounded-3xl border border-leaf-100 bg-white/90 p-6 shadow-soft backdrop-blur-sm">
         <p className="text-sm font-semibold uppercase tracking-wider text-leaf-700/85">
-          Hackathon MVP
         </p>
         <h2 className="mt-3 font-heading text-3xl font-extrabold leading-tight text-leaf-900">
           Plan your field in minutes, from boundary to crop economics.

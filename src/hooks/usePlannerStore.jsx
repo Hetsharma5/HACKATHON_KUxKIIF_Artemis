@@ -10,6 +10,7 @@ const INITIAL_SQ_M = 0;
 export function PlannerProvider({ children }) {
   const [fieldAreaSqM, setFieldAreaSqM] = useState(INITIAL_SQ_M);
   const [pointsCount, setPointsCount] = useState(0);
+  const [points, setPoints] = useState([]);
   const [isBoundaryCompleted, setIsBoundaryCompleted] = useState(false);
   const [selectedCropKey, setSelectedCropKey] = useState("cotton");
   const [orientation, setOrientation] = useState("auto");
@@ -35,6 +36,8 @@ export function PlannerProvider({ children }) {
       setFieldAreaSqM,
       pointsCount,
       setPointsCount,
+      points,
+      setPoints,
       isBoundaryCompleted,
       setIsBoundaryCompleted,
       isGenerating,
@@ -48,6 +51,7 @@ export function PlannerProvider({ children }) {
       orientation,
       fieldAreaSqM,
       pointsCount,
+      points,
       isBoundaryCompleted,
       isGenerating,
       areaSummary,

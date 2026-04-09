@@ -1,4 +1,5 @@
-import { MapContainer, Polygon, TileLayer, useMapEvents } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, Polygon, TileLayer, useMapEvents, useMap } from "react-leaflet";
 
 const DEMO_POLYGON = [
   [22.315, 72.548],
@@ -20,7 +21,19 @@ function TapHandler({ onTap }) {
   return null;
 }
 
-function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap }) {
+function MapBounds({ positions }) {
+  const map = useMap();
+  useEffect(() => {
+    if (positions && positions.length > 0) {
+      map.fitBounds(positions, { padding: [20, 20], maxZoom: 18 });
+    }
+  }, [map, positions]);
+  return null;
+}
+
+function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap, points = [] }) {
+  const activePositions = points.length > 2 ? points : DEMO_POLYGON;
+
   return (
     <div className="relative overflow-hidden rounded-3xl border border-leaf-200 bg-white shadow-soft">
       <MapContainer
@@ -30,18 +43,16 @@ function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap }) {
         className="h-72 w-full"
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+          url={`https://api.maptiler.com/maps/hybrid/256/{z}/{x}/{y}.jpg?key=${import.meta.env.VITE_MAPTILER_API_KEY}`}
         />
         <Polygon
-          positions={DEMO_POLYGON}
+          positions={activePositions}
           pathOptions={{ color: "#2f9f31", fillColor: "#5fbf66", fillOpacity: 0.28 }}
         />
+        <MapBounds positions={activePositions} />
         <TapHandler onTap={onDemoTap} />
       </MapContainer>
-      <div className="pointer-events-none absolute left-2 right-2 top-2 rounded-xl bg-white/90 p-2 text-xs text-leaf-900 shadow-sm">
-        UI preview active. Map tap and real boundary geometry will be added next.
-      </div>
       {showRows && (
         <div className="pointer-events-none absolute inset-0">
           {previewLines.map((line) => {

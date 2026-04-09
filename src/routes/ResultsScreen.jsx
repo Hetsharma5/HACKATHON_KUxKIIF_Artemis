@@ -9,7 +9,7 @@ import { formatCurrency, formatNumber } from "../utils/format";
 
 function ResultsScreen() {
   const navigate = useNavigate();
-  const { crop, estimates } = usePlannerStore();
+  const { crop, estimates, points } = usePlannerStore();
 
   if (!estimates || estimates.areaSqM <= 0) {
     return (
@@ -32,7 +32,7 @@ function ResultsScreen() {
       subtitle="UI-first results panel with preview lines"
     >
       <div className="space-y-4">
-        <StaticFieldMap showRows previewLines={estimates.previewLines} />
+        <StaticFieldMap showRows previewLines={estimates.previewLines} points={points} />
 
         <div className="rounded-2xl border border-leaf-100 bg-white/90 p-4">
           <h3 className="font-heading text-base font-bold text-leaf-900">

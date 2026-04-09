@@ -1,11 +1,12 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppButton from "../components/AppButton";
 import BottomActionBar from "../components/BottomActionBar";
 import ScreenContainer from "../components/ScreenContainer";
 import StatCard from "../components/StatCard";
-import StaticFieldMap from "../components/StaticFieldMap";
+import DrawField from "../components/DrawField";
 import { usePlannerStore } from "../hooks/usePlannerStore";
-import { createDemoAreaFromPoints } from "../utils/area";
+import { getAreaFromPolygonPoints } from "../utils/area";
 import { formatNumber } from "../utils/format";
 
 function DrawFieldScreen() {
@@ -16,31 +17,33 @@ function DrawFieldScreen() {
     setFieldAreaSqM,
     areaSummary,
     setIsBoundaryCompleted,
+    points,
+    setPoints,
   } = usePlannerStore();
 
-  const addDemoPoint = () => {
-    const nextCount = pointsCount + 1;
+  useEffect(() => {
+    const nextCount = points.length;
     setPointsCount(nextCount);
-    setFieldAreaSqM(createDemoAreaFromPoints(nextCount));
-  };
-
-  const undoPoint = () => {
-    const nextCount = Math.max(pointsCount - 1, 0);
-    setPointsCount(nextCount);
-    setFieldAreaSqM(createDemoAreaFromPoints(nextCount));
+    setFieldAreaSqM(getAreaFromPolygonPoints(points));
     if (nextCount < 3) {
       setIsBoundaryCompleted(false);
     }
+  }, [points, setPointsCount, setFieldAreaSqM, setIsBoundaryCompleted]);
+
+  const addPoint = (latlng) => {
+    setPoints((prev) => [...prev, latlng]);
+  };
+
+  const undoPoint = () => {
+    setPoints((prev) => prev.slice(0, -1));
   };
 
   const clearPoints = () => {
-    setPointsCount(0);
-    setFieldAreaSqM(0);
-    setIsBoundaryCompleted(false);
+    setPoints([]);
   };
 
   const completeBoundary = () => {
-    if (pointsCount < 3) {
+    if (points.length < 3) {
       return;
     }
     setIsBoundaryCompleted(true);
@@ -51,17 +54,17 @@ function DrawFieldScreen() {
     <ScreenContainer
       backTo="/"
       title="Draw Field"
-      subtitle="Tap the map to add boundary points. This version uses demo tap simulation."
+      subtitle="Tap the map to draw real boundary points."
     >
       <div className="space-y-4">
-        <StaticFieldMap onDemoTap={addDemoPoint} />
+        <DrawField points={points} onAddPoint={addPoint} />
 
         <div className="grid grid-cols-3 gap-3">
           <StatCard label="Points" value={pointsCount} hint="Need at least 3" />
           <StatCard
             label="Area (sqm)"
             value={formatNumber(areaSummary.areaSqM, 0)}
-            hint="Demo estimate"
+            hint="Real estimate"
           />
           <StatCard
             label="Area (acre)"
@@ -76,9 +79,9 @@ function DrawFieldScreen() {
             value={formatNumber(areaSummary.areaHectares, 2)}
           />
           <article className="rounded-2xl border border-dashed border-leaf-300 bg-white/80 p-3 text-xs text-leaf-800">
-            Tap inside map to add points in this UI version.
+            Tap on the interactive map to plot actual boundary coordinates.
             <br />
-            Undo and Clear are active for navigation testing.
+            Calculate precise area automatically!
           </article>
         </div>
       </div>
