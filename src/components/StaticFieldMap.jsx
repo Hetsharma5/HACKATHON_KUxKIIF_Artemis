@@ -1,0 +1,69 @@
+import { MapContainer, Polygon, TileLayer, useMapEvents } from "react-leaflet";
+
+const DEMO_POLYGON = [
+  [22.315, 72.548],
+  [22.315, 72.566],
+  [22.304, 72.571],
+  [22.298, 72.556],
+  [22.303, 72.545],
+];
+
+function TapHandler({ onTap }) {
+  useMapEvents({
+    click: () => {
+      if (onTap) {
+        onTap();
+      }
+    },
+  });
+
+  return null;
+}
+
+function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap }) {
+  return (
+    <div className="relative overflow-hidden rounded-3xl border border-leaf-200 bg-white shadow-soft">
+      <MapContainer
+        center={[22.3038, 72.5564]}
+        zoom={14}
+        scrollWheelZoom={false}
+        className="h-72 w-full"
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Polygon
+          positions={DEMO_POLYGON}
+          pathOptions={{ color: "#2f9f31", fillColor: "#5fbf66", fillOpacity: 0.28 }}
+        />
+        <TapHandler onTap={onDemoTap} />
+      </MapContainer>
+      <div className="pointer-events-none absolute left-2 right-2 top-2 rounded-xl bg-white/90 p-2 text-xs text-leaf-900 shadow-sm">
+        UI preview active. Map tap and real boundary geometry will be added next.
+      </div>
+      {showRows && (
+        <div className="pointer-events-none absolute inset-0">
+          {previewLines.map((line) => {
+            const lineStyle =
+              line.orientation === "vertical"
+                ? { left: `${line.positionPercent}%`, top: "12%", bottom: "12%" }
+                : { top: `${line.positionPercent}%`, left: "12%", right: "12%" };
+
+            return (
+              <span
+                key={line.id}
+                className={`absolute rounded-full bg-leaf-600/60 ${
+                  line.orientation === "vertical" ? "w-[2px]" : "h-[2px]"
+                }`}
+                style={lineStyle}
+              />
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default StaticFieldMap;

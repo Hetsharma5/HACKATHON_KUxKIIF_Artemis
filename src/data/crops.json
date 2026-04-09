@@ -1,0 +1,52 @@
+{
+  "cotton": {
+    "name": "Cotton",
+    "rowSpacingCm": 120,
+    "plantSpacingCm": 45,
+    "seedRateKgPerAcre": 1.5,
+    "fertilizerKgPerAcre": 100,
+    "yieldQuintalPerAcre": 8,
+    "marketPricePerQuintal": 7000,
+    "seedPricePerKg": 900
+  },
+  "wheat": {
+    "name": "Wheat",
+    "rowSpacingCm": 22.5,
+    "plantSpacingCm": 5,
+    "seedRateKgPerAcre": 45,
+    "fertilizerKgPerAcre": 80,
+    "yieldQuintalPerAcre": 18,
+    "marketPricePerQuintal": 2500,
+    "seedPricePerKg": 35
+  },
+  "groundnut": {
+    "name": "Groundnut",
+    "rowSpacingCm": 30,
+    "plantSpacingCm": 10,
+    "seedRateKgPerAcre": 35,
+    "fertilizerKgPerAcre": 60,
+    "yieldQuintalPerAcre": 10,
+    "marketPricePerQuintal": 6000,
+    "seedPricePerKg": 70
+  },
+  "maize": {
+    "name": "Maize",
+    "rowSpacingCm": 60,
+    "plantSpacingCm": 20,
+    "seedRateKgPerAcre": 8,
+    "fertilizerKgPerAcre": 90,
+    "yieldQuintalPerAcre": 22,
+    "marketPricePerQuintal": 2200,
+    "seedPricePerKg": 250
+  },
+  "cumin": {
+    "name": "Cumin",
+    "rowSpacingCm": 30,
+    "plantSpacingCm": 10,
+    "seedRateKgPerAcre": 5,
+    "fertilizerKgPerAcre": 40,
+    "yieldQuintalPerAcre": 4,
+    "marketPricePerQuintal": 18000,
+    "seedPricePerKg": 350
+  }
+}
