@@ -4,7 +4,7 @@ import { createPreviewLines, getRowCount } from "./layout";
 const FERTILIZER_PRICE_PER_KG = 25;
 const LABOR_COST_PER_ACRE = 3000;
 
-export function generatePlanMetrics({ areaSqM, crop, orientation }) {
+export function generatePlanMetrics({ areaSqM, crop, orientation, previousCrop }) {
   if (!crop) {
     return null;
   }
@@ -18,7 +18,15 @@ export function generatePlanMetrics({ areaSqM, crop, orientation }) {
 
   const rowInfo = getRowCount(usableArea, rowSpacingM, orientation);
   const seedRequiredKg = area.areaAcres * crop.seedRateKgPerAcre;
-  const fertilizerRequiredKg = area.areaAcres * crop.fertilizerKgPerAcre;
+  let fertilizerRequiredKg = area.areaAcres * crop.fertilizerKgPerAcre;
+  
+  if (previousCrop) {
+    if (previousCrop.toLowerCase() === "cotton") {
+      fertilizerRequiredKg *= 1.20; // 20% increase
+    } else if (previousCrop.toLowerCase() === "groundnut" || previousCrop.toLowerCase() === "legumes") {
+      fertilizerRequiredKg *= 0.85; // 15% decrease
+    }
+  }
   const expectedYieldQuintal = area.areaAcres * crop.yieldQuintalPerAcre;
   const estimatedRevenue = expectedYieldQuintal * crop.marketPricePerQuintal;
   const seedCost = seedRequiredKg * crop.seedPricePerKg;

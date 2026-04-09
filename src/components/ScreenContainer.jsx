@@ -2,29 +2,29 @@ import { Link } from "react-router-dom";
 
 function ScreenContainer({ title, subtitle, children, backTo }) {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col text-leaf-950">
-      <header className="px-4 pb-4 pt-5">
-        <div className="mb-3 flex items-center justify-between">
+    <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col text-[#1F2937] text-left">
+      <header className="px-5 pb-5 pt-8 text-left">
+        <div className="mb-6 flex items-center justify-between">
           {backTo ? (
             <Link
               to={backTo}
-              className="rounded-xl border border-leaf-200 bg-white/80 px-3 py-1.5 text-sm font-semibold text-leaf-800 transition hover:bg-leaf-50"
+              className="rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-sm font-semibold text-[#1F2937] transition hover:bg-gray-50 flex items-center justify-center shadow-sm"
             >
               Back
             </Link>
           ) : (
             <span />
           )}
-          <span className="rounded-full bg-leaf-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-leaf-700">
+          <span className="rounded-full bg-[#10B981]/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#059669]">
             KisanSarthi
           </span>
         </div>
-        <h1 className="font-heading text-2xl font-extrabold text-leaf-900">
+        <h1 className="text-3xl font-bold text-[#1F2937] tracking-tight">
           {title}
         </h1>
-        {subtitle && <p className="mt-1 text-sm text-leaf-800/90">{subtitle}</p>}
+        {subtitle && <p className="mt-2 text-sm text-[#6B7280] leading-relaxed">{subtitle}</p>}
       </header>
-      <main className="flex-1 px-4 pb-4">{children}</main>
+      <main className="flex-1 px-5 pb-5">{children}</main>
     </div>
   );
 }

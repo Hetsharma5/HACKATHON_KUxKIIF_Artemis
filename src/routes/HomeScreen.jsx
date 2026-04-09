@@ -37,9 +37,12 @@ function HomeScreen() {
           This first pass includes mobile-first UI and navigation flow across all
           screens. Tap through to validate user experience before map logic.
         </p>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-col gap-3">
           <AppButton className="w-full text-base" onClick={startPlanning}>
             Start Planning
+          </AppButton>
+          <AppButton className="w-full text-base" variant="secondary" onClick={() => navigate("/my-lands")}>
+            My Lands Library
           </AppButton>
         </div>
       </section>

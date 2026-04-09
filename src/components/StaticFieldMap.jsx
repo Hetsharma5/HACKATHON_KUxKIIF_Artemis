@@ -35,7 +35,7 @@ function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap, points
   const activePositions = points.length > 2 ? points : DEMO_POLYGON;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-leaf-200 bg-white shadow-soft">
+    <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white">
       <MapContainer
         center={[22.3038, 72.5564]}
         zoom={14}
@@ -44,7 +44,7 @@ function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap, points
       >
         <TileLayer
           attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-          url={`https://api.maptiler.com/maps/hybrid/256/{z}/{x}/{y}.jpg?key=${import.meta.env.VITE_MAPTILER_API_KEY}`}
+          url={`https://api.maptiler.com/maps/satellite/256/{z}/{x}/{y}.jpg?key=${import.meta.env.VITE_MAPTILER_API_KEY}`}
         />
         <Polygon
           positions={activePositions}
@@ -64,8 +64,10 @@ function StaticFieldMap({ showRows = false, previewLines = [], onDemoTap, points
             return (
               <span
                 key={line.id}
-                className={`absolute rounded-full bg-leaf-600/60 ${
-                  line.orientation === "vertical" ? "w-[2px]" : "h-[2px]"
+                className={`absolute ${
+                  line.orientation === "vertical" 
+                    ? "w-[2px] border-l-2 border-dashed border-[#007AFF] opacity-40" 
+                    : "h-[2px] border-t-2 border-dashed border-[#007AFF] opacity-40"
                 }`}
                 style={lineStyle}
               />

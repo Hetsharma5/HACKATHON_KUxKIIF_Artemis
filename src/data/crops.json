@@ -7,7 +7,8 @@
     "fertilizerKgPerAcre": 100,
     "yieldQuintalPerAcre": 8,
     "marketPricePerQuintal": 7000,
-    "seedPricePerKg": 900
+    "seedPricePerKg": 900,
+    "daysToHarvest": 150
   },
   "wheat": {
     "name": "Wheat",
@@ -17,7 +18,8 @@
     "fertilizerKgPerAcre": 80,
     "yieldQuintalPerAcre": 18,
     "marketPricePerQuintal": 2500,
-    "seedPricePerKg": 35
+    "seedPricePerKg": 35,
+    "daysToHarvest": 120
   },
   "groundnut": {
     "name": "Groundnut",
@@ -27,7 +29,8 @@
     "fertilizerKgPerAcre": 60,
     "yieldQuintalPerAcre": 10,
     "marketPricePerQuintal": 6000,
-    "seedPricePerKg": 70
+    "seedPricePerKg": 70,
+    "daysToHarvest": 100
   },
   "maize": {
     "name": "Maize",
@@ -37,7 +40,8 @@
     "fertilizerKgPerAcre": 90,
     "yieldQuintalPerAcre": 22,
     "marketPricePerQuintal": 2200,
-    "seedPricePerKg": 250
+    "seedPricePerKg": 250,
+    "daysToHarvest": 90
   },
   "cumin": {
     "name": "Cumin",
@@ -47,6 +51,7 @@
     "fertilizerKgPerAcre": 40,
     "yieldQuintalPerAcre": 4,
     "marketPricePerQuintal": 18000,
-    "seedPricePerKg": 350
+    "seedPricePerKg": 350,
+    "daysToHarvest": 110
   }
 }
