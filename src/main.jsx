@@ -6,15 +6,18 @@ import "./index.css";
 import App from "./App";
 import { PlannerProvider } from "./hooks/usePlannerStore";
 import { TranslationProvider } from "./hooks/useTranslation";
+import { AuthProvider } from "./hooks/useAuth";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <TranslationProvider>
-        <PlannerProvider>
-          <App />
-        </PlannerProvider>
-      </TranslationProvider>
+      <AuthProvider>
+        <TranslationProvider>
+          <PlannerProvider>
+            <App />
+          </PlannerProvider>
+        </TranslationProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

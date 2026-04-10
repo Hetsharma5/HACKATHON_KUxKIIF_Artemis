@@ -170,6 +170,19 @@ export const translations = {
     rec_wheat_msg: "Based on your previous {0} harvest, integrating Soybean or Pulses will help balance the soil profile.",
     rec_default: "Wheat or Cotton",
     rec_default_msg: "Your soil health looks strong! A cash crop like Wheat or Cotton is highly recommended this season.",
+
+    // Login
+    login_title: "Sign in to KisanSarthi",
+    login_subtitle: "Access your lands and AI crop plans from any device.",
+    login_name: "Full Name",
+    login_name_placeholder: "Enter your name",
+    login_phone: "Phone Number",
+    login_button: "Sign In",
+    login_loading: "Authenticating...",
+    login_error_fields: "Please enter both name and phone number.",
+    login_error_phone: "Please enter a valid 10-digit phone number.",
+    login_error_server: "Unable to connect to server. Please try again later.",
+    login_disclaimer: "By signing in, you agree to our terms. Securely powered by KisanSarthi AI.",
   },
   hi: {
     app_title: "KisanSarthi",
@@ -331,6 +344,19 @@ export const translations = {
     rec_wheat_msg: "आपकी पिछली {0} की फसल के आधार पर, सोयाबीन या दालें मिट्टी को संतुलित करेंगी।",
     rec_default: "गेहूँ या कपास",
     rec_default_msg: "आपकी मिट्टी स्वस्थ दिखती है! इस सीजन गेहूँ या कपास जैसी नकदी फसल की दृढ़ सिफारिश है।",
+
+    // Login
+    login_title: "KisanSarthi में साइन इन करें",
+    login_subtitle: "किसी भी डिवाइस से अपने खेतों और AI फसल योजनाओं तक पहुँचें।",
+    login_name: "पूरा नाम",
+    login_name_placeholder: "अपना नाम दर्ज करें",
+    login_phone: "फ़ोन नंबर",
+    login_button: "साइन इन करें",
+    login_loading: "प्रमाणित किया जा रहा है...",
+    login_error_fields: "कृपया नाम और फ़ोन नंबर दोनों दर्ज करें।",
+    login_error_phone: "कृपया 10 अंकों का मान्य फ़ोन नंबर दर्ज करें।",
+    login_error_server: "सर्वर से कनेक्ट करने में असमर्थ। कृपया बाद में पुनः प्रयास करें।",
+    login_disclaimer: "साइन इन करके, आप हमारी शर्तों से सहमत होते हैं। KisanSarthi AI द्वारा सुरक्षित रूप से संचालित।",
   },
   gu: {
     app_title: "KisanSarthi",
@@ -492,5 +518,18 @@ export const translations = {
     rec_wheat_msg: "તમારી પાછલી {0} ઊપજના આધારે, સોયાબીન કે કઠોળ માટી સંતુલિત કરશે.",
     rec_default: "ઘઉં કે કપાસ",
     rec_default_msg: "તમારી માટી સ્વસ્થ લાગે છે! આ સીઝનમાં ઘઉં કે કપાસ જેવા રોકડિયા પાકની ભલામણ છે.",
+
+    // Login
+    login_title: "KisanSarthi માં સાઇન ઇન કરો",
+    login_subtitle: "કોઈપણ ઉપકરણથી તમારા ખેતરો અને AI પાક યોજનાઓ ઍક્સેસ કરો.",
+    login_name: "પૂરું નામ",
+    login_name_placeholder: "તમારું નામ દાખલ કરો",
+    login_phone: "ફોન નંબર",
+    login_button: "સાઇન ઇન કરો",
+    login_loading: "પ્રમાણિત થઈ રહ્યું છે...",
+    login_error_fields: "કૃપા કરીને નામ અને ફોન નંબર બંને દાખલ કરો.",
+    login_error_phone: "કૃપા કરીને માન્ય 10-અંકનો ફોન નંબર દાખલ કરો.",
+    login_error_server: "સર્વર સાથે કનેક્ટ કરવામાં અસમર્થ. કૃપા કરીને પછીથી પ્રયાસ કરો.",
+    login_disclaimer: "સાઇન ઇન કરીને, તમે અમારી શરતોથી સંમત થાઓ છો. KisanSarthi AI દ્વારા સુરક્ષિત રીતે સંચાલિત.",
   }
 };
