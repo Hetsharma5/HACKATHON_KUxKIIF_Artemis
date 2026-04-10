@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import AppButton from "../components/AppButton";
 import ScreenContainer from "../components/ScreenContainer";
 import { usePlannerStore } from "../hooks/usePlannerStore";
+import { useTranslation } from "../hooks/useTranslation";
 
 function HomeScreen() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const {
     setFieldAreaSqM,
     setPointsCount,
@@ -24,25 +26,25 @@ function HomeScreen() {
 
   return (
     <ScreenContainer
-      title="KisanSarthi"
-      subtitle="Smart plantation blueprint for every farmer"
+      title={t("app_title")}
+      subtitle={t("home_subtitle")}
     >
       <section className="animate-rise rounded-3xl border border-leaf-100 bg-white/90 p-6 shadow-soft backdrop-blur-sm">
         <p className="text-sm font-semibold uppercase tracking-wider text-leaf-700/85">
+          {t("home_welcome")}
         </p>
         <h2 className="mt-3 font-heading text-3xl font-extrabold leading-tight text-leaf-900">
-          Plan your field in minutes, from boundary to crop economics.
+          KisanSarthi
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-leaf-800/85">
-          This first pass includes mobile-first UI and navigation flow across all
-          screens. Tap through to validate user experience before map logic.
+          {t("home_description")}
         </p>
         <div className="mt-6 flex flex-col gap-3">
           <AppButton className="w-full text-base" onClick={startPlanning}>
-            Start Planning
+            {t("start_planning")}
           </AppButton>
           <AppButton className="w-full text-base" variant="secondary" onClick={() => navigate("/my-lands")}>
-            My Lands Library
+            {t("my_lands_library")}
           </AppButton>
         </div>
       </section>

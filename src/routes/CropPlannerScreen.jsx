@@ -8,16 +8,19 @@ import ScreenContainer from "../components/ScreenContainer";
 import StatCard from "../components/StatCard";
 import StaticFieldMap from "../components/StaticFieldMap";
 import { usePlannerStore } from "../hooks/usePlannerStore";
+import { useTranslation } from "../hooks/useTranslation";
 import { formatNumber } from "../utils/format";
-
-const ORIENTATIONS = [
-  { value: "horizontal", label: "Horizontal" },
-  { value: "vertical", label: "Vertical" },
-  { value: "auto", label: "Auto" },
-];
 
 function CropPlannerScreen() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  
+  const ORIENTATIONS = [
+    { value: "horizontal", label: t("horizontal") },
+    { value: "vertical", label: t("vertical") },
+    { value: "auto", label: t("auto") },
+  ];
+
   const {
     cropsData,
     selectedCropKey,
@@ -64,7 +67,7 @@ function CropPlannerScreen() {
     return (
       <ScreenContainer
         backTo="/draw-field"
-        title="Crop Planner"
+        title={t("crop_planner_title")}
         subtitle="Complete boundary first to continue"
       >
         <div className="rounded-2xl border border-earth-200 bg-earth-50 p-4 text-sm text-earth-900">
@@ -78,15 +81,15 @@ function CropPlannerScreen() {
   return (
     <ScreenContainer
       backTo="/draw-field"
-      title="Crop Planner"
-      subtitle="Choose crop details and row orientation"
+      title={t("crop_planner_title")}
+      subtitle={t("crop_planner_subtitle")}
     >
       <div className="space-y-4 pb-32">
         <section className="grid grid-cols-3 gap-3">
-          <StatCard label="sqm" value={formatNumber(areaSummary.areaSqM, 0)} />
-          <StatCard label="acres" value={formatNumber(areaSummary.areaAcres, 2)} />
+          <StatCard label={t("sqm")} value={formatNumber(areaSummary.areaSqM, 0)} />
+          <StatCard label={t("acres")} value={formatNumber(areaSummary.areaAcres, 2)} />
           <StatCard
-            label="hectares"
+            label={t("hectares")}
             value={formatNumber(areaSummary.areaHectares, 2)}
           />
         </section>
@@ -104,7 +107,7 @@ function CropPlannerScreen() {
 
         <section className="rounded-2xl border border-leaf-100 bg-white/90 p-4">
           <h3 className="font-heading text-base font-bold text-leaf-900">
-            Orientation
+            {t("orientation")}
           </h3>
           <div className="mt-3 grid grid-cols-3 gap-2">
             {ORIENTATIONS.map((item) => (
@@ -123,16 +126,16 @@ function CropPlannerScreen() {
             ))}
           </div>
           <div className="mt-3 rounded-xl bg-[#F9FAFB] p-4 text-xs font-medium text-[#1F2937] border border-gray-100 shadow-sm leading-relaxed">
-            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">Row spacing</span> <span>{selectedCrop.rowSpacingCm} cm</span></p>
-            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">Plant spacing</span> <span>{selectedCrop.plantSpacingCm} cm</span></p>
-            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">Est. Seed rate</span> <span>{selectedCrop.seedRateKgPerAcre} kg/acre</span></p>
-            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">Fertilizer</span> <span>{selectedCrop.fertilizerKgPerAcre} kg/acre</span></p>
-            <p className="flex justify-between"><span className="text-[#6B7280]">Potential yield</span> <span className="text-[#10B981] font-bold">{selectedCrop.yieldQuintalPerAcre} q/acre</span></p>
+            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">{t("row_spacing")}</span> <span>{selectedCrop.rowSpacingCm} cm</span></p>
+            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">{t("plant_spacing")}</span> <span>{selectedCrop.plantSpacingCm} cm</span></p>
+            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">{t("est_seed_rate")}</span> <span>{selectedCrop.seedRateKgPerAcre} kg/acre</span></p>
+            <p className="flex justify-between border-b border-gray-200 pb-1 mb-1"><span className="text-[#6B7280]">{t("fertilizer")}</span> <span>{selectedCrop.fertilizerKgPerAcre} kg/acre</span></p>
+            <p className="flex justify-between"><span className="text-[#6B7280]">{t("potential_yield")}</span> <span className="text-[#10B981] font-bold">{selectedCrop.yieldQuintalPerAcre} q/acre</span></p>
           </div>
           
           <div className="mt-4 pt-4 border-t border-gray-100">
              <h3 className="font-heading text-sm font-bold text-leaf-900 mb-2">
-               Live Layout Preview
+               {t("live_preview")}
              </h3>
              <div className="h-64 sm:h-72 w-full overflow-hidden rounded-xl border border-leaf-200 shadow-sm relative">
                <StaticFieldMap showRows={true} previewLines={estimates?.previewLines || []} points={points} />
@@ -151,7 +154,7 @@ function CropPlannerScreen() {
           >
             <span className="text-xl">⚠️</span>
             <div>
-              <p className="text-sm font-bold text-orange-800">Rotation Alert!</p>
+              <p className="text-sm font-bold text-orange-800">{t("rotation_alert")}</p>
               <p className="text-xs text-orange-700 mt-1">
                 Planting {selectedCrop.name} again might tire your soil! Consider <span className="font-bold border-b border-orange-700">{getAlternativeCrop(selectedCrop.name)}</span> for a 10% better yield.
               </p>
@@ -162,7 +165,7 @@ function CropPlannerScreen() {
 
       <BottomActionBar>
         <AppButton className="w-full" onClick={generateLayout} disabled={isGenerating}>
-          {isGenerating ? "Processing Maps..." : "Generate Preview Grid"}
+          {isGenerating ? t("processing_maps") : t("generate_preview")}
         </AppButton>
       </BottomActionBar>
     </ScreenContainer>

@@ -6,11 +6,13 @@ import ScreenContainer from "../components/ScreenContainer";
 import StatCard from "../components/StatCard";
 import DrawField from "../components/DrawField";
 import { usePlannerStore } from "../hooks/usePlannerStore";
+import { useTranslation } from "../hooks/useTranslation";
 import { getAreaFromPolygonPoints } from "../utils/area";
 import { formatNumber } from "../utils/format";
 
 function DrawFieldScreen() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const {
     pointsCount,
     setPointsCount,
@@ -53,8 +55,8 @@ function DrawFieldScreen() {
   return (
     <ScreenContainer
       backTo="/"
-      title="Draw Field"
-      subtitle="Tap the map to draw real boundary points."
+      title={t("draw_field_title")}
+      subtitle={t("draw_field_subtitle")}
     >
       <div className="space-y-4">
         <DrawField points={points} onAddPoint={addPoint} />
@@ -62,12 +64,12 @@ function DrawFieldScreen() {
         <div className="grid grid-cols-3 gap-3">
           <StatCard label="Points" value={pointsCount} hint="Need at least 3" />
           <StatCard
-            label="Area (sqm)"
+            label={`${t("area")} (${t("sqm")})`}
             value={formatNumber(areaSummary.areaSqM, 0)}
             hint="Real estimate"
           />
           <StatCard
-            label="Area (acre)"
+            label={`${t("area")} (${t("acres")})`}
             value={formatNumber(areaSummary.areaAcres, 2)}
             hint="Auto converted"
           />
@@ -75,7 +77,7 @@ function DrawFieldScreen() {
 
         <div className="grid grid-cols-2 gap-3">
           <StatCard
-            label="Hectares"
+            label={t("hectares")}
             value={formatNumber(areaSummary.areaHectares, 2)}
           />
           <article className="rounded-2xl border border-dashed border-leaf-300 bg-white/80 p-3 text-xs text-leaf-800">
@@ -89,13 +91,13 @@ function DrawFieldScreen() {
       <BottomActionBar>
         <div className="grid grid-cols-3 gap-2">
           <AppButton variant="secondary" onClick={undoPoint} disabled={pointsCount < 1}>
-            Undo
+            {t("undo_point")}
           </AppButton>
           <AppButton variant="danger" onClick={clearPoints} disabled={pointsCount < 1}>
-            Clear
+            {t("clear_points")}
           </AppButton>
           <AppButton onClick={completeBoundary} disabled={pointsCount < 3}>
-            Complete Boundary
+            {t("complete_boundary")}
           </AppButton>
         </div>
       </BottomActionBar>

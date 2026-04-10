@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import ScreenContainer from "../components/ScreenContainer";
 import StaticFieldMap from "../components/StaticFieldMap";
 import { usePlannerStore } from "../hooks/usePlannerStore";
+import { useTranslation } from "../hooks/useTranslation";
 import SmartRecommendationCard from "../components/SmartRecommendationCard";
 import AppButton from "../components/AppButton";
 
-function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, setActiveLandId, resetLandSeason, setPoints, setFieldAreaSqM, setIsBoundaryCompleted }) {
+function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, setActiveLandId, resetLandSeason, setPoints, setFieldAreaSqM, setIsBoundaryCompleted, t }) {
   const [isAdding, setIsAdding] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedCrop, setSelectedCrop] = useState('');
@@ -95,7 +96,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
           >
             <div className="p-6">
               <div className="flex justify-between items-center mb-5">
-                <h3 className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest">Crop Timeline</h3>
+                <h3 className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest">{t("history")}</h3>
                 <div className="flex gap-2">
                   <button onClick={() => setIsAdding(!isAdding)} className="text-[10px] bg-white border border-[#E5E7EB] text-[#6B7280] px-3 py-1.5 rounded-full font-bold uppercase tracking-wider transition-all hover:bg-gray-50 shadow-sm">
                     + Log History
@@ -174,6 +175,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
 
 function MyLandsScreen() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { savedLands, appendCropHistory, setActiveLandId, resetLandSeason, setPoints, setFieldAreaSqM, setIsBoundaryCompleted } = usePlannerStore();
   const [expandedId, setExpandedId] = useState(null);
 
@@ -184,8 +186,8 @@ function MyLandsScreen() {
   return (
     <ScreenContainer
       backTo="/"
-      title="My Fields"
-      subtitle="Your digital registry and smart crop history."
+      title={t("my_fields_title")}
+      subtitle={t("my_fields_subtitle")}
     >
       <div className="mx-6 border-b border-[#E5E7EB] mb-6"></div>
       
@@ -197,10 +199,10 @@ function MyLandsScreen() {
             className="flex flex-col items-center justify-center py-16 px-6 text-center"
           >
             <span className="text-6xl mb-4">🌾</span>
-            <h3 className="text-lg font-bold text-[#1F2937] mb-2">Your farm starts here</h3>
+            <h3 className="text-lg font-bold text-[#1F2937] mb-2">{t("your_farm_starts")}</h3>
             <p className="text-sm text-[#6B7280] mb-8">Map your first field to unlock AI crop planning and local insights.</p>
             <AppButton onClick={() => navigate("/draw-field")} className="w-3/4">
-              Map First Field
+              {t("map_first_field")}
             </AppButton>
           </motion.div>
         ) : (
@@ -217,6 +219,7 @@ function MyLandsScreen() {
               setPoints={setPoints}
               setFieldAreaSqM={setFieldAreaSqM}
               setIsBoundaryCompleted={setIsBoundaryCompleted}
+              t={t}
             />
           ))
         )}
