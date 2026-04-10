@@ -50,15 +50,15 @@ function HomeScreen() {
       </section>
       <section className="mt-5 grid grid-cols-2 gap-3 text-sm">
         <article className="rounded-2xl bg-leaf-900 p-4 text-white shadow-soft">
-          <p className="font-semibold">Field Boundary</p>
+          <p className="font-semibold">{t("field_boundary")}</p>
           <p className="mt-1 text-xs text-leaf-100">
-            Guided map-based boundary workflow
+            {t("field_boundary_desc")}
           </p>
         </article>
         <article className="rounded-2xl bg-earth-500 p-4 text-white shadow-soft">
-          <p className="font-semibold">Crop Blueprint</p>
+          <p className="font-semibold">{t("crop_blueprint")}</p>
           <p className="mt-1 text-xs text-amber-50">
-            Spacing, seed, yield, cost and profit view
+            {t("crop_blueprint_desc")}
           </p>
         </article>
       </section>

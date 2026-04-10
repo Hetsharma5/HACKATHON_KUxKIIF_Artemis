@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from '../hooks/useTranslation';
 
 function ActionPlanGenerator({ cropName, daysToHarvest }) {
   const [activeTip, setActiveTip] = useState(null);
+  const { t } = useTranslation();
 
   const today = new Date();
   
@@ -35,22 +37,22 @@ BEGIN:VEVENT
 DTSTAMP:${startStr}
 DTSTART:${startStr}
 DTEND:${startStr}
-SUMMARY:Est. Sowing Window (${cropName})
-DESCRIPTION:Wait for approx. 20mm rainfall to begin sowing ${cropName}.
+SUMMARY:${t("est_sowing_window")} (${cropName})
+DESCRIPTION:${t("sowing_hint")}
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:${fertStr}
 DTSTART:${fertStr}
 DTEND:${fertStr}
-SUMMARY:Apply First Dose of Nitrogen
-DESCRIPTION:Est. 2 bags of fertilizer needed for ${cropName}. Check for pests.
+SUMMARY:${t("apply_nitrogen")}
+DESCRIPTION:${t("nitrogen_hint")}
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:${harvStr}
 DTSTART:${harvStr}
 DTEND:${harvStr}
-SUMMARY:Harvest Window (${cropName})
-DESCRIPTION:Prepare equipment for collection.
+SUMMARY:${t("est_harvest_window")} (${cropName})
+DESCRIPTION:${t("harvest_hint")}
 END:VEVENT
 END:VCALENDAR`;
 
@@ -70,12 +72,12 @@ END:VCALENDAR`;
   return (
     <div className="rounded-3xl border border-gray-200 bg-[#FFFFFF] p-6 shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] mt-4">
       <div className="flex justify-between items-center mb-5 border-b border-gray-100 pb-4">
-        <h3 className="text-lg font-bold text-[#1F2937]">Est. Schedule</h3>
+        <h3 className="text-lg font-bold text-[#1F2937]">{t("est_schedule")}</h3>
         <button 
           onClick={handleSaveToCalendar}
           className="bg-[#007AFF] hover:bg-blue-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-full border border-blue-600 transition-colors shadow-sm tracking-wider uppercase"
         >
-          Add to Calendar
+          {t("add_to_calendar")}
         </button>
       </div>
 
@@ -90,14 +92,14 @@ END:VCALENDAR`;
           <div className="flex-1">
             <div className="flex justify-between items-center">
               <p className="text-[10px] font-bold text-[#007AFF] uppercase tracking-widest">{formatDate(sowingDate)}</p>
-              <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded uppercase">Stage 1</span>
+              <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded uppercase">{t("stage")} 1</span>
             </div>
-            <p className="text-sm font-semibold text-[#1F2937] mt-0.5">Est. Sowing Window</p>
-            <p className="text-xs text-[#6B7280] mt-0.5">Wait for approx. 20mm rainfall.</p>
+            <p className="text-sm font-semibold text-[#1F2937] mt-0.5">{t("est_sowing_window")}</p>
+            <p className="text-xs text-[#6B7280] mt-0.5">{t("sowing_hint")}</p>
             <AnimatePresence>
               {activeTip === 'sowing' && (
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-2 text-xs bg-blue-50 text-blue-800 p-2 rounded-lg font-medium shadow-inner">
-                  💡 Tip: Ensure seed depth is precise! Optimized spacing yields up to 8% less seed waste.
+                  💡 {t("sowing_tip")}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -113,14 +115,14 @@ END:VCALENDAR`;
           <div className="flex-1">
             <div className="flex justify-between items-center">
               <p className="text-[10px] font-bold text-[#10B981] uppercase tracking-widest">{formatDate(growthDate)}</p>
-              <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded uppercase">Stage 2</span>
+              <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded uppercase">{t("stage")} 2</span>
             </div>
-            <p className="text-sm font-semibold text-[#1F2937] mt-0.5">Apply First Dose of Nitrogen</p>
-            <p className="text-xs text-[#6B7280] mt-0.5">Est. 2 bags depending on soil test.</p>
+            <p className="text-sm font-semibold text-[#1F2937] mt-0.5">{t("apply_nitrogen")}</p>
+            <p className="text-xs text-[#6B7280] mt-0.5">{t("nitrogen_hint")}</p>
             <AnimatePresence>
               {activeTip === 'growth' && (
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-2 text-xs bg-green-50 text-green-800 p-2 rounded-lg font-medium shadow-inner">
-                  💡 Tip: In a few weeks, remember to check the underside of leaves for aphids or whiteflies!
+                  💡 {t("nitrogen_tip")}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -135,14 +137,14 @@ END:VCALENDAR`;
           <div className="flex-1">
             <div className="flex justify-between items-center">
               <p className="text-[10px] font-bold text-[#F59E0B] uppercase tracking-widest">{formatDate(harvestDate)}</p>
-              <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded uppercase">Stage 3</span>
+              <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded uppercase">{t("stage")} 3</span>
             </div>
-            <p className="text-sm font-semibold text-[#1F2937] mt-0.5">Est. Harvest Window</p>
-            <p className="text-xs text-[#6B7280] mt-0.5">Prepare equipment for collection.</p>
+            <p className="text-sm font-semibold text-[#1F2937] mt-0.5">{t("est_harvest_window")}</p>
+            <p className="text-xs text-[#6B7280] mt-0.5">{t("harvest_hint")}</p>
             <AnimatePresence>
               {activeTip === 'harvest' && (
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-2 text-xs bg-amber-50 text-amber-800 p-2 rounded-lg font-medium shadow-inner">
-                  💡 Tip: Keep an eye on local MSP rates! Time your market entry right after the collection.
+                  💡 {t("harvest_tip")}
                 </motion.div>
               )}
             </AnimatePresence>

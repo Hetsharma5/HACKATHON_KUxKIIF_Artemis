@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { MapContainer, Marker, Polygon, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useTranslation } from "../hooks/useTranslation";
 
 // Child component to safely use leaflet hooks
 function MapEventsHandler({ onPointerAdd }) {
@@ -14,6 +15,7 @@ function MapEventsHandler({ onPointerAdd }) {
 
 export default function DrawField({ points = [], onAddPoint }) {
   const mapRef = useRef(null);
+  const { t } = useTranslation();
 
   const handleLocateMe = () => {
     if (navigator.geolocation) {
@@ -76,7 +78,7 @@ export default function DrawField({ points = [], onAddPoint }) {
           onClick={handleLocateMe}
           className="pointer-events-auto rounded-lg bg-leaf-600 px-3 py-1.5 text-xs font-bold text-white shadow-md transition hover:bg-leaf-700"
         >
-          📍 Locate Me
+          📍 {t("locate_me")}
         </button>
       </div>
     </div>

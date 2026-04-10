@@ -38,10 +38,10 @@ function ResultsScreen() {
       <ScreenContainer
         backTo="/crop-planner"
         title={t("results_title")}
-        subtitle="No layout yet"
+        subtitle={t("no_layout")}
       >
         <div className="rounded-2xl border border-earth-200 bg-earth-50 p-4 text-sm text-earth-900">
-          Generate layout from Crop Planner to view output.
+          {t("generate_layout_msg")}
         </div>
       </ScreenContainer>
     );
@@ -112,7 +112,7 @@ function ResultsScreen() {
 
         {/* Resource Blueprint */}
         <div className="mt-2">
-          <h3 className="text-lg font-bold text-[#1F2937] mb-3 text-left pl-1">Resource Needs</h3>
+          <h3 className="text-lg font-bold text-[#1F2937] mb-3 text-left pl-1">{t("resource_needs")}</h3>
           <div className="rounded-3xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] bg-white border border-[#E5E7EB] overflow-hidden">
             <div className="flex items-center justify-between p-5 border-b border-[#E5E7EB]">
               <div className="flex items-center gap-3">
@@ -149,7 +149,7 @@ function ResultsScreen() {
           <div className="mt-3 mx-2 rounded-xl bg-[#007AFF]/10 p-3 flex gap-3 items-center border border-[#007AFF]/20">
             <span className="text-lg">🎯</span>
             <p className="text-[#007AFF] text-xs font-bold leading-snug">
-              Precision Sarthi estimates a <span className="underline">5-8% reduction</span> in seed waste due to optimized spacing.
+              {t("precision_tip")}
             </p>
           </div>
         </div>
@@ -162,21 +162,21 @@ function ResultsScreen() {
         <div className="flex flex-col gap-3">
           <div className="grid grid-cols-2 gap-3">
             <AppButton variant="primary" onClick={() => navigate("/compare")}>
-              Compare Yields
+              {t("compare_yields")}
             </AppButton>
             <AppButton variant="secondary" onClick={() => {
               addSavedLand(`${crop.name} Plot`, crop.name, points);
               navigate("/my-lands");
             }}>
-              Save to Library 
+              {t("save_to_library")}
             </AppButton>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <AppButton variant="ghost" onClick={() => navigate("/crop-planner")}>
-              Change Crop
+              {t("change_crop")}
             </AppButton>
             <AppButton variant="ghost" onClick={() => navigate("/draw-field")}>
-              Redraw Field
+              {t("redraw_field")}
             </AppButton>
           </div>
         </div>

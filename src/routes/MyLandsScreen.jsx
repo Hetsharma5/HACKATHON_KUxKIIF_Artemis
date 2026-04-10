@@ -59,7 +59,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
         <div className="flex-1">
           <h2 className="text-xl font-bold text-[#1F2937]">{land.name}</h2>
           <p className="text-[10px] font-bold text-[#6B7280] mt-1 tracking-widest uppercase">
-            Mapped: {land.lastMappedDate}
+            {t("mapped")}: {land.lastMappedDate}
           </p>
         </div>
         <div className="text-right flex-1 flex flex-col items-end">
@@ -67,7 +67,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
             <div className="w-full pl-4">
               <div className="flex justify-between items-center mb-1">
                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#10B981]">{land.currentCrop}</span>
-                 <span className="text-[10px] font-bold text-[#6B7280]">Est. 60 Days left</span>
+                 <span className="text-[10px] font-bold text-[#6B7280]">{t("est_days_left")}</span>
               </div>
               <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
                 <motion.div 
@@ -80,7 +80,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
             </div>
           ) : (
             <span className="inline-block rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-bold text-[#007AFF] border border-blue-100">
-              Ready for Planting
+              {t("ready_for_planting")}
             </span>
           )}
         </div>
@@ -99,11 +99,11 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
                 <h3 className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest">{t("history")}</h3>
                 <div className="flex gap-2">
                   <button onClick={() => setIsAdding(!isAdding)} className="text-[10px] bg-white border border-[#E5E7EB] text-[#6B7280] px-3 py-1.5 rounded-full font-bold uppercase tracking-wider transition-all hover:bg-gray-50 shadow-sm">
-                    + Log History
+                    {t("log_history")}
                   </button>
                   {land.currentCrop && land.currentCrop !== 'None' && (
                     <button onClick={() => resetLandSeason(land.id)} className="text-[10px] bg-red-50 text-red-600 border border-red-100 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider transition-all hover:bg-red-100 shadow-sm">
-                      Reset Season
+                      {t("reset_season")}
                     </button>
                   )}
                 </div>
@@ -118,14 +118,14 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm mb-5 overflow-hidden"
                   >
-                    <h4 className="text-xs font-bold text-[#1F2937] mb-3 uppercase tracking-wider">Log Soil History</h4>
+                    <h4 className="text-xs font-bold text-[#1F2937] mb-3 uppercase tracking-wider">{t("log_soil_history")}</h4>
                     <div className="flex gap-2 mb-4">
                       <select className="flex-1 bg-gray-50 border border-gray-200 rounded-lg text-xs p-2.5 font-semibold text-[#1F2937] outline-none focus:border-blue-300" value={selectedYear} onChange={e => setSelectedYear(e.target.value)}>
-                        <option value="">Year</option>
+                        <option value="">{t("year")}</option>
                         {[2025, 2024, 2023, 2022].map(y => <option key={y} value={y}>{y}</option>)}
                       </select>
                       <select className="flex-1 bg-gray-50 border border-gray-200 rounded-lg text-xs p-2.5 font-semibold text-[#1F2937] outline-none focus:border-blue-300" value={selectedCrop} onChange={e => setSelectedCrop(e.target.value)}>
-                        <option value="">Crop</option>
+                        <option value="">{t("crop")}</option>
                         <option value="Cotton">Cotton</option>
                         <option value="Wheat">Wheat</option>
                         <option value="Maize">Maize</option>
@@ -136,7 +136,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
                       onClick={submitHistory} 
                       className="w-full bg-[#007AFF] text-white rounded-xl text-xs font-bold py-2.5 flex justify-center items-center h-10 transition-colors hover:bg-blue-600"
                     >
-                      {loading ? <span className="animate-pulse">Analyzing soil exhaustion...</span> : "Analyze Soil"}
+                      {loading ? <span className="animate-pulse">{t("analyzing_soil")}</span> : t("analyze_soil")}
                     </button>
                   </motion.div>
                 )}
@@ -200,7 +200,7 @@ function MyLandsScreen() {
           >
             <span className="text-6xl mb-4">🌾</span>
             <h3 className="text-lg font-bold text-[#1F2937] mb-2">{t("your_farm_starts")}</h3>
-            <p className="text-sm text-[#6B7280] mb-8">Map your first field to unlock AI crop planning and local insights.</p>
+            <p className="text-sm text-[#6B7280] mb-8">{t("farm_starts_desc")}</p>
             <AppButton onClick={() => navigate("/draw-field")} className="w-3/4">
               {t("map_first_field")}
             </AppButton>

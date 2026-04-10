@@ -62,16 +62,16 @@ function DrawFieldScreen() {
         <DrawField points={points} onAddPoint={addPoint} />
 
         <div className="grid grid-cols-3 gap-3">
-          <StatCard label="Points" value={pointsCount} hint="Need at least 3" />
+          <StatCard label={t("points")} value={pointsCount} hint={t("points_hint")} />
           <StatCard
             label={`${t("area")} (${t("sqm")})`}
             value={formatNumber(areaSummary.areaSqM, 0)}
-            hint="Real estimate"
+            hint={t("real_estimate")}
           />
           <StatCard
             label={`${t("area")} (${t("acres")})`}
             value={formatNumber(areaSummary.areaAcres, 2)}
-            hint="Auto converted"
+            hint={t("auto_converted")}
           />
         </div>
 
@@ -81,9 +81,9 @@ function DrawFieldScreen() {
             value={formatNumber(areaSummary.areaHectares, 2)}
           />
           <article className="rounded-2xl border border-dashed border-leaf-300 bg-white/80 p-3 text-xs text-leaf-800">
-            Tap on the interactive map to plot actual boundary coordinates.
+            {t("draw_hint")}
             <br />
-            Calculate precise area automatically!
+            {t("draw_hint2")}
           </article>
         </div>
       </div>

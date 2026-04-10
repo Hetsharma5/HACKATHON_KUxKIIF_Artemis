@@ -1,18 +1,23 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useTranslation } from '../hooks/useTranslation';
 
 function FinancialForecastChart({ cost, revenue }) {
+  const { t } = useTranslation();
+  const costLabel = t("cost");
+  const revenueLabel = t("revenue");
+
   const data = [
     {
-      name: 'Financial Outlook',
-      Cost: cost,
-      Revenue: revenue,
+      name: t("financial_outlook"),
+      [costLabel]: cost,
+      [revenueLabel]: revenue,
     }
   ];
 
   return (
     <div className="rounded-3xl border border-gray-200 bg-[#FFFFFF] p-6 shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] w-full mt-4">
-      <h3 className="text-lg font-bold text-[#1F2937] mb-6 text-left">Est. Financial Forecast</h3>
+      <h3 className="text-lg font-bold text-[#1F2937] mb-6 text-left">{t("financial_forecast")}</h3>
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -34,8 +39,8 @@ function FinancialForecastChart({ cost, revenue }) {
               formatter={(value) => [`₹ ${Number(value).toLocaleString('en-IN')}`, undefined]}
             />
             <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-            <Bar dataKey="Cost" fill="#FECACA" radius={[6, 6, 0, 0]} barSize={45} />
-            <Bar dataKey="Revenue" fill="#A7F3D0" radius={[6, 6, 0, 0]} barSize={45} />
+            <Bar dataKey={costLabel} fill="#FECACA" radius={[6, 6, 0, 0]} barSize={45} />
+            <Bar dataKey={revenueLabel} fill="#A7F3D0" radius={[6, 6, 0, 0]} barSize={45} />
           </BarChart>
         </ResponsiveContainer>
       </div>

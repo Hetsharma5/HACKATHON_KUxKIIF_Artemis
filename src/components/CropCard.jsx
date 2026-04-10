@@ -1,4 +1,9 @@
+import { useTranslation } from "../hooks/useTranslation";
+
 function CropCard({ crop, selected, onSelect }) {
+  const { t } = useTranslation();
+  const cropNameKey = `crop_${crop.name.toLowerCase()}`;
+
   return (
     <button
       type="button"
@@ -11,21 +16,21 @@ function CropCard({ crop, selected, onSelect }) {
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-heading text-base font-bold text-leaf-900">
-          {crop.name}
+          {t(cropNameKey) || crop.name}
         </h3>
         <span
           className={`rounded-full px-2 py-1 text-[11px] font-bold ${
             selected ? "bg-leaf-600 text-white" : "bg-leaf-100 text-leaf-700"
           }`}
         >
-          {selected ? "Selected" : "Choose"}
+          {selected ? t("selected") : t("choose")}
         </span>
       </div>
       <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-leaf-800">
-        <p>Row: {crop.rowSpacingCm} cm</p>
-        <p>Plant: {crop.plantSpacingCm} cm</p>
-        <p>Seed: {crop.seedRateKgPerAcre} kg/acre</p>
-        <p>Yield: {crop.yieldQuintalPerAcre} q/acre</p>
+        <p>{t("row_spacing")}: {crop.rowSpacingCm} cm</p>
+        <p>{t("plant_spacing")}: {crop.plantSpacingCm} cm</p>
+        <p>{t("seed")}: {crop.seedRateKgPerAcre} kg/acre</p>
+        <p>{t("yield")}: {crop.yieldQuintalPerAcre} q/acre</p>
       </div>
     </button>
   );

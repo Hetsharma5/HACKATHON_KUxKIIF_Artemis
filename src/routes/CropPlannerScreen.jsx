@@ -68,11 +68,10 @@ function CropPlannerScreen() {
       <ScreenContainer
         backTo="/draw-field"
         title={t("crop_planner_title")}
-        subtitle="Complete boundary first to continue"
+        subtitle={t("boundary_incomplete")}
       >
         <div className="rounded-2xl border border-earth-200 bg-earth-50 p-4 text-sm text-earth-900">
-          Boundary is not completed yet. Go back and complete at least 3 points
-          on the field screen.
+          {t("boundary_incomplete_msg")}
         </div>
       </ScreenContainer>
     );
@@ -156,7 +155,7 @@ function CropPlannerScreen() {
             <div>
               <p className="text-sm font-bold text-orange-800">{t("rotation_alert")}</p>
               <p className="text-xs text-orange-700 mt-1">
-                Planting {selectedCrop.name} again might tire your soil! Consider <span className="font-bold border-b border-orange-700">{getAlternativeCrop(selectedCrop.name)}</span> for a 10% better yield.
+                {t("rotation_msg_pre")} {t(`crop_${selectedCropKey}`)} {t("rotation_msg_mid")} <span className="font-bold border-b border-orange-700">{getAlternativeCrop(selectedCrop.name)}</span> {t("rotation_msg_post")}
               </p>
             </div>
           </motion.div>
