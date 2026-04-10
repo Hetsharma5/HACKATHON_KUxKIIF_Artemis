@@ -144,6 +144,41 @@ function ResultsScreen() {
           </div>
         </div>
 
+        {/* Cost Breakdown */}
+        {estimates.costBreakdown && (
+          <div className="mt-2">
+            <h3 className="text-lg font-bold text-[#1F2937] mb-1 text-left pl-1">{t("cost_breakdown")}</h3>
+            <p className="text-xs text-[#6B7280] mb-3 pl-1">{t("cost_breakdown_desc")}</p>
+            <div className="rounded-3xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] bg-white border border-[#E5E7EB] overflow-hidden">
+              {[
+                { icon: "🌱", key: "cost_seed", amount: estimates.costBreakdown.seedCost },
+                { icon: "🧪", key: "cost_fertilizer", amount: estimates.costBreakdown.fertilizerCost },
+                { icon: "👷", key: "cost_labor", amount: estimates.costBreakdown.laborCost },
+                { icon: "💧", key: "cost_irrigation", amount: estimates.costBreakdown.irrigationCost },
+                { icon: "🐛", key: "cost_pesticide", amount: estimates.costBreakdown.pesticideCost },
+                { icon: "🚜", key: "cost_equipment", amount: estimates.costBreakdown.equipmentCost },
+                { icon: "🚚", key: "cost_transport", amount: estimates.costBreakdown.transportCost },
+              ].map((item, idx) => (
+                <div key={item.key} className={`flex items-start justify-between p-4 px-5 ${idx < 6 ? "border-b border-[#E5E7EB]" : ""}`}>
+                  <div className="flex items-start gap-3 flex-1 min-w-0">
+                    <span className="text-lg mt-0.5 shrink-0">{item.icon}</span>
+                    <div className="min-w-0">
+                      <p className="font-bold text-[#1F2937] text-sm">{t(item.key)}</p>
+                      <p className="text-[10px] text-[#6B7280] mt-0.5 leading-snug">{t(`${item.key}_desc`)}</p>
+                    </div>
+                  </div>
+                  <span className="font-bold text-[#1F2937] text-sm whitespace-nowrap ml-3 mt-0.5">{formatCurrency(item.amount)}</span>
+                </div>
+              ))}
+              {/* Total row */}
+              <div className="flex items-center justify-between p-5 bg-[#F0FDF4] border-t-2 border-[#86EFAC]">
+                <span className="font-extrabold text-[#166534] text-sm uppercase tracking-wider">{t("cost_total")}</span>
+                <span className="font-extrabold text-[#166534] text-lg">{formatCurrency(estimates.estimatedCost)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div>
           <FinancialForecastChart cost={estimates.estimatedCost} revenue={estimates.estimatedRevenue} />
           <div className="mt-3 mx-2 rounded-xl bg-[#007AFF]/10 p-3 flex gap-3 items-center border border-[#007AFF]/20">
