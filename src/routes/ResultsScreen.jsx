@@ -211,7 +211,7 @@ function ResultsScreen() {
               {t("compare_yields")}
             </AppButton>
             <AppButton variant="secondary" onClick={() => {
-              addSavedLand(`${crop.name} Plot`, crop.name, points);
+              addSavedLand(`${crop.name} Plot`, selectedCropKey, points);
               navigate("/my-lands");
             }}>
               {t("save_to_library")}

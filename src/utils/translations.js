@@ -178,6 +178,8 @@ export const translations = {
     rec_wheat_msg: "Based on your previous {0} harvest, integrating Soybean or Pulses will help balance the soil profile.",
     rec_default: "Wheat or Cotton",
     rec_default_msg: "Your soil health looks strong! A cash crop like Wheat or Cotton is highly recommended this season.",
+    rec_cumin_msg: "Cumin is highly soil-exhausting. We suggest a fallow period or intense leguminous rotation to restore organic matter.",
+    rec_groundnut_msg: "Your soil has high nitrogen fixation from the Groundnut crop. This is a perfect time for high-value cash crops like Cotton.",
 
     // Login
     login_title: "Sign in to KisanSarthi",
@@ -368,6 +370,8 @@ export const translations = {
     rec_wheat_msg: "आपकी पिछली {0} की फसल के आधार पर, सोयाबीन या दालें मिट्टी को संतुलित करेंगी।",
     rec_default: "गेहूँ या कपास",
     rec_default_msg: "आपकी मिट्टी स्वस्थ दिखती है! इस सीजन गेहूँ या कपास जैसी नकदी फसल की दृढ़ सिफारिश है।",
+    rec_cumin_msg: "जीरा मिट्टी को बहुत थका देता है। हम मिट्टी की उर्वरता बहाल करने के लिए परती अवधि या गहन दलहनी रोटेशन का सुझाव देते हैं।",
+    rec_groundnut_msg: "मूंगफली की फसल से आपकी मिट्टी में नाइट्रोजन की मात्रा बढ़ गई है। यह कपास जैसी उच्च मूल्य वाली नकदी फसलों के लिए सही समय है।",
 
     // Login
     login_title: "KisanSarthi में साइन इन करें",
@@ -558,6 +562,8 @@ export const translations = {
     rec_wheat_msg: "તમારી પાછલી {0} ઊપજના આધારે, સોયાબીન કે કઠોળ માટી સંતુલિત કરશે.",
     rec_default: "ઘઉં કે કપાસ",
     rec_default_msg: "તમારી માટી સ્વસ્થ લાગે છે! આ સીઝનમાં ઘઉં કે કપાસ જેવા રોકડિયા પાકની ભલામણ છે.",
+    rec_cumin_msg: "જીરાના પાકથી જમીન વધુ થાકી જાય છે. અમે જમીનની ફળદ્રુપતા વધારવા માટે આરામ અથવા કઠોળના પાકની ભલામણ કરીએ છીએ.",
+    rec_groundnut_msg: "મગફળીના પાકને કારણે તમારી જમીનમાં નાઇટ્રોજનનું પ્રમાણ વધ્યું છે. આ કપાસ જેવા કીમતી પાક માટે ઉત્તમ સમય છે.",
 
     // Login
     login_title: "KisanSarthi માં સાઇન ઇન કરો",

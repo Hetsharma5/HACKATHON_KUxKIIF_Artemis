@@ -154,11 +154,11 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, onDelete, n
                       </select>
                       <select className="flex-1 bg-gray-50 border border-gray-200 rounded-lg text-xs p-2.5 font-semibold text-[#1F2937] outline-none focus:border-blue-300" value={selectedCrop} onChange={e => setSelectedCrop(e.target.value)}>
                         <option value="">{t("crop")}</option>
-                        <option value="Cotton">{t("crop_cotton")}</option>
-                        <option value="Wheat">{t("crop_wheat")}</option>
-                        <option value="Maize">{t("crop_maize")}</option>
-                        <option value="Groundnut">{t("crop_groundnut")}</option>
-                        <option value="Cumin">{t("crop_cumin")}</option>
+                        <option value="cotton">{t("crop_cotton")}</option>
+                        <option value="wheat">{t("crop_wheat")}</option>
+                        <option value="maize">{t("crop_maize")}</option>
+                        <option value="groundnut">{t("crop_groundnut")}</option>
+                        <option value="cumin">{t("crop_cumin")}</option>
                       </select>
                     </div>
                     <button 
@@ -180,7 +180,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, onDelete, n
                     </div>
                     <div className="flex-1 bg-white border border-gray-100 rounded-2xl p-4 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-between items-center">
                       <div>
-                        <span className="text-[#1F2937] font-bold block text-sm">{season.crop}</span>
+                        <span className="text-[#1F2937] font-bold block text-sm">{t(`crop_${season.crop.toLowerCase()}`)}</span>
                         <span className="text-[#6B7280] text-[10px] font-bold uppercase tracking-wider mt-0.5 block">{season.year}</span>
                       </div>
                       <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md uppercase tracking-wider">
@@ -191,9 +191,10 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, onDelete, n
                 ))}
               </div>
 
-              {land.history.length > 0 && (
-                <SmartRecommendationCard lastCrop={land.history[land.history.length - 1]?.crop} />
-              )}
+              {land.history.length > 0 && (() => {
+                const latestHistory = [...land.history].sort((a, b) => b.year - a.year)[0];
+                return <SmartRecommendationCard lastCrop={latestHistory?.crop} />;
+              })()}
             </div>
           </motion.div>
         )}

@@ -29,16 +29,28 @@ function SmartRecommendationCard({ lastCrop }) {
   let npk = { n: 100, p: 100, k: 100 };
   let statusBadge = "";
 
-  if (lastCrop?.toLowerCase() === "cotton") {
+  const cropLower = lastCrop?.toLowerCase();
+
+  if (cropLower === "cotton") {
     recommendation = t("rec_groundnut");
     message = t("rec_cotton_msg");
     npk = { n: 25, p: 60, k: 50 };
     statusBadge = t("nutrient_depleted");
-  } else if (lastCrop?.toLowerCase() === "wheat" || lastCrop?.toLowerCase() === "maize") {
+  } else if (cropLower === "wheat" || cropLower === "maize") {
     recommendation = t("rec_soybean");
     message = t("rec_wheat_msg").replace("{0}", lastCrop);
     npk = { n: 40, p: 70, k: 60 };
     statusBadge = t("needs_rotation");
+  } else if (cropLower === "cumin") {
+    recommendation = t("rec_default");
+    message = t("rec_cumin_msg");
+    npk = { n: 15, p: 30, k: 40 };
+    statusBadge = t("nutrient_depleted");
+  } else if (cropLower === "groundnut") {
+    recommendation = "Cotton or Cumin";
+    message = t("rec_groundnut_msg");
+    npk = { n: 90, p: 50, k: 70 };
+    statusBadge = t("healthy");
   } else {
     recommendation = t("rec_default");
     message = t("rec_default_msg");

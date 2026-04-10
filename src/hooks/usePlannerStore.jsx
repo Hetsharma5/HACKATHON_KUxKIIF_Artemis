@@ -40,9 +40,10 @@ export function PlannerProvider({ children }) {
 
   // Compute previous crop based on activeLandId
   const activeLand = savedLands.find(l => (l._id ?? l.id) === activeLandId);
-  const previousCrop = activeLand?.history?.length > 0 
-    ? activeLand.history[activeLand.history.length - 1].crop 
+  const latestHistoryEntry = activeLand?.history?.length > 0 
+    ? [...activeLand.history].sort((a, b) => b.year - a.year)[0]
     : null;
+  const previousCrop = latestHistoryEntry?.crop;
 
   const estimates = generatePlanMetrics({
     areaSqM: fieldAreaSqM,
