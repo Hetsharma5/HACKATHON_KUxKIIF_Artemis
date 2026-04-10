@@ -11,8 +11,15 @@ async function request(path, options = {}) {
 }
 
 // --- Users ---
-export function loginUser(phone, name) {
+export function loginUser(phone) {
   return request("/api/users/login", {
+    method: "POST",
+    body: JSON.stringify({ phone }),
+  });
+}
+
+export function signupUser(phone, name) {
+  return request("/api/users/signup", {
     method: "POST",
     body: JSON.stringify({ phone, name }),
   });

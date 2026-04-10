@@ -8,27 +8,45 @@ import { useTranslation } from "../hooks/useTranslation";
 import SmartRecommendationCard from "../components/SmartRecommendationCard";
 import AppButton from "../components/AppButton";
 
-function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, setActiveLandId, resetLandSeason, setPoints, setFieldAreaSqM, setIsBoundaryCompleted, t }) {
+function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, onDelete, navigate, setActiveLandId, resetLandSeason, setPoints, setFieldAreaSqM, setIsBoundaryCompleted, t }) {
   const [isAdding, setIsAdding] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [selectedCrop, setSelectedCrop] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
-  const submitHistory = () => {
+  const landId = land._id ?? land.id;
+
+  const submitHistory = async () => {
     if(!selectedCrop || !selectedYear) return;
     setLoading(true);
-    setTimeout(() => {
-      onAddHistory(land.id, parseInt(selectedYear), selectedCrop);
-      setLoading(false);
+    try {
+      await onAddHistory(landId, parseInt(selectedYear), selectedCrop);
       setIsAdding(false);
       setSelectedCrop('');
       setSelectedYear('');
-    }, 1500);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const submitDelete = async (e) => {
+    e.stopPropagation();
+    if (!window.confirm(t("confirm_delete"))) return;
+    setDeleting(true);
+    try {
+      await onDelete(landId);
+    } catch (err) {
+      console.error(err);
+      setDeleting(false);
+    }
   };
 
   const handleClick = () => {
     if(land.currentCrop === 'None' || !land.currentCrop) {
-      setActiveLandId(land.id);
+      setActiveLandId(landId);
       setPoints(land.points);
       setFieldAreaSqM(land.areaSqM || 100);
       setIsBoundaryCompleted(true);
@@ -56,8 +74,18 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
       </div>
       
       <div className="p-6 cursor-pointer flex justify-between items-center bg-white hover:bg-gray-50 transition-colors" onClick={handleClick}>
-        <div className="flex-1">
-          <h2 className="text-xl font-bold text-[#1F2937]">{land.name}</h2>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-bold text-[#1F2937] truncate">{land.name}</h2>
+            <button 
+              onClick={submitDelete}
+              disabled={deleting}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
+              title={t("delete_land")}
+            >
+              {deleting ? "..." : "🗑️"}
+            </button>
+          </div>
           <p className="text-[10px] font-bold text-[#6B7280] mt-1 tracking-widest uppercase">
             {t("mapped")}: {land.lastMappedDate}
           </p>
@@ -102,7 +130,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
                     {t("log_history")}
                   </button>
                   {land.currentCrop && land.currentCrop !== 'None' && (
-                    <button onClick={() => resetLandSeason(land.id)} className="text-[10px] bg-red-50 text-red-600 border border-red-100 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider transition-all hover:bg-red-100 shadow-sm">
+                    <button onClick={() => resetLandSeason(landId)} className="text-[10px] bg-red-50 text-red-600 border border-red-100 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider transition-all hover:bg-red-100 shadow-sm">
                       {t("reset_season")}
                     </button>
                   )}
@@ -126,10 +154,11 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
                       </select>
                       <select className="flex-1 bg-gray-50 border border-gray-200 rounded-lg text-xs p-2.5 font-semibold text-[#1F2937] outline-none focus:border-blue-300" value={selectedCrop} onChange={e => setSelectedCrop(e.target.value)}>
                         <option value="">{t("crop")}</option>
-                        <option value="Cotton">Cotton</option>
-                        <option value="Wheat">Wheat</option>
-                        <option value="Maize">Maize</option>
-                        <option value="Groundnut">Groundnut</option>
+                        <option value="Cotton">{t("crop_cotton")}</option>
+                        <option value="Wheat">{t("crop_wheat")}</option>
+                        <option value="Maize">{t("crop_maize")}</option>
+                        <option value="Groundnut">{t("crop_groundnut")}</option>
+                        <option value="Cumin">{t("crop_cumin")}</option>
                       </select>
                     </div>
                     <button 
@@ -155,7 +184,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
                         <span className="text-[#6B7280] text-[10px] font-bold uppercase tracking-wider mt-0.5 block">{season.year}</span>
                       </div>
                       <span className="text-[9px] font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md uppercase tracking-wider">
-                        {season.status}
+                        {season.status === "In Progress" ? t("status_in_progress") : t("status_harvested")}
                       </span>
                     </div>
                   </div>
@@ -176,7 +205,7 @@ function LandProfileCard({ land, isExpanded, onToggle, onAddHistory, navigate, s
 function MyLandsScreen() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { savedLands, appendCropHistory, setActiveLandId, resetLandSeason, setPoints, setFieldAreaSqM, setIsBoundaryCompleted } = usePlannerStore();
+  const { savedLands, appendCropHistory, setActiveLandId, resetLandSeason, deleteSavedLand, setPoints, setFieldAreaSqM, setIsBoundaryCompleted } = usePlannerStore();
   const [expandedId, setExpandedId] = useState(null);
 
   const toggleExpand = (id) => {
@@ -208,11 +237,12 @@ function MyLandsScreen() {
         ) : (
           savedLands.map(land => (
             <LandProfileCard 
-              key={land.id} 
+              key={land._id ?? land.id} 
               land={land} 
-              isExpanded={expandedId === land.id}
-              onToggle={() => toggleExpand(land.id)}
+              isExpanded={expandedId === (land._id ?? land.id)}
+              onToggle={() => toggleExpand(land._id ?? land.id)}
               onAddHistory={appendCropHistory}
+              onDelete={deleteSavedLand}
               navigate={navigate}
               setActiveLandId={setActiveLandId}
               resetLandSeason={resetLandSeason}

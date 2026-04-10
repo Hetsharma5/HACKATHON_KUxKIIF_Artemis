@@ -40,13 +40,13 @@ function CropPlannerScreen() {
   const cropEntries = useMemo(() => Object.entries(cropsData), [cropsData]);
   const selectedCrop = cropsData[selectedCropKey];
 
-  const activeLand = savedLands.find(l => l.id === activeLandId);
+  const activeLand = savedLands.find(l => (l._id ?? l.id) === activeLandId);
   const previousCrop = activeLand?.history?.length > 0 ? activeLand.history[activeLand.history.length - 1].crop : null;
 
   const getAlternativeCrop = (crop) => {
-    if(crop.toLowerCase() === 'cotton') return 'Groundnut';
-    if(crop.toLowerCase() === 'wheat' || crop.toLowerCase() === 'maize') return 'Soybean';
-    return 'Legumes';
+    if(crop.toLowerCase() === 'cotton') return t('crop_groundnut_full');
+    if(crop.toLowerCase() === 'wheat' || crop.toLowerCase() === 'maize') return t('crop_soybean_full');
+    return t('crop_legumes_full');
   };
 
   const isRotationWarning = previousCrop && previousCrop.toLowerCase() === selectedCropKey;

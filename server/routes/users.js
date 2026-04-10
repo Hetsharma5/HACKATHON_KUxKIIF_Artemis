@@ -3,32 +3,48 @@ import User from "../models/User.js";
 
 const router = Router();
 
-// POST /api/users/login — Find or create user by phone
+// POST /api/users/login — Verify existing user by phone
 router.post("/login", async (req, res) => {
   try {
-    const { phone, name } = req.body;
+    const { phone } = req.body;
 
-    if (!phone || !name) {
-      return res.status(400).json({ error: "Phone and name are required." });
+    if (!phone) {
+      return res.status(400).json({ error: "Phone number is required." });
     }
 
-    // Find existing user or create new one
-    let user = await User.findOne({ phone });
+    const user = await User.findOne({ phone });
 
     if (!user) {
-      user = await User.create({ phone, name });
-    } else {
-      // Update name if changed
-      if (user.name !== name) {
-        user.name = name;
-        await user.save();
-      }
+      return res.status(404).json({ error: "User not found. Please Sign Up first." });
     }
 
     res.json({ user });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Server error during login." });
+  }
+});
+
+// POST /api/users/signup — Create a new user
+router.post("/signup", async (req, res) => {
+  try {
+    const { phone, name } = req.body;
+
+    if (!phone || !name) {
+      return res.status(400).json({ error: "Phone and name are required for Sign Up." });
+    }
+
+    // Check if user already exists
+    let existingUser = await User.findOne({ phone });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists. Please use Login." });
+    }
+
+    const user = await User.create({ phone, name });
+    res.status(201).json({ user });
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).json({ error: "Server error during sign up." });
   }
 });
 

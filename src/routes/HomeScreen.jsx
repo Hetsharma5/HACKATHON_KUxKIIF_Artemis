@@ -34,7 +34,7 @@ function HomeScreen() {
           {t("home_welcome")}
         </p>
         <h2 className="mt-3 font-heading text-3xl font-extrabold leading-tight text-leaf-900">
-          KisanSarthi
+          {t("app_title")}
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-leaf-800/85">
           {t("home_description")}

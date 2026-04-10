@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { loginUser as apiLogin } from "../utils/api";
+import { loginUser as apiLogin, signupUser as apiSignup } from "../utils/api";
 
 const AuthContext = createContext(null);
 
@@ -22,8 +22,15 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = useCallback(async (phone, name) => {
-    const { user: userData } = await apiLogin(phone, name);
+  const login = useCallback(async (phone) => {
+    const { user: userData } = await apiLogin(phone);
+    setUser(userData);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+    return userData;
+  }, []);
+
+  const signup = useCallback(async (phone, name) => {
+    const { user: userData } = await apiSignup(phone, name);
     setUser(userData);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
     return userData;
@@ -35,7 +42,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

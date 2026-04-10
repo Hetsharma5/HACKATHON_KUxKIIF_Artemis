@@ -4,7 +4,7 @@ import { useTranslation } from '../hooks/useTranslation';
 
 function ActionPlanGenerator({ cropName, daysToHarvest }) {
   const [activeTip, setActiveTip] = useState(null);
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
 
   const today = new Date();
   
@@ -18,7 +18,7 @@ function ActionPlanGenerator({ cropName, daysToHarvest }) {
   harvestDate.setDate(today.getDate() + (daysToHarvest || 100));
 
   const formatDate = (dateObj) => {
-    return dateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    return dateObj.toLocaleDateString(lang === "en" ? "en-US" : lang === "hi" ? "hi-IN" : "gu-IN", { month: "short", day: "numeric" });
   };
 
   const toIcsDate = (dateObj) => {
@@ -32,7 +32,7 @@ function ActionPlanGenerator({ cropName, daysToHarvest }) {
 
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//KisanSarthi//ActionPlan//EN
+PRODID:-//KisanSarthi//ActionPlan//${lang.toUpperCase()}
 BEGIN:VEVENT
 DTSTAMP:${startStr}
 DTSTART:${startStr}

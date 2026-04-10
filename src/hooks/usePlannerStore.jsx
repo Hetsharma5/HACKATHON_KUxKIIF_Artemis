@@ -29,7 +29,7 @@ export function PlannerProvider({ children }) {
   useEffect(() => {
     if (user?._id) {
       api.fetchLands(user._id).then(({ lands }) => {
-        setSavedLands(lands);
+        setSavedLands(lands || []);
       }).catch((err) => {
         console.error("Failed to load lands:", err);
       });
@@ -39,7 +39,7 @@ export function PlannerProvider({ children }) {
   }, [user]);
 
   // Compute previous crop based on activeLandId
-  const activeLand = savedLands.find(l => (l._id || l.id) === activeLandId);
+  const activeLand = savedLands.find(l => (l._id ?? l.id) === activeLandId);
   const previousCrop = activeLand?.history?.length > 0 
     ? activeLand.history[activeLand.history.length - 1].crop 
     : null;
@@ -83,12 +83,12 @@ export function PlannerProvider({ children }) {
   const appendCropHistory = useCallback(async (landId, year, cropName) => {
     try {
       const { land } = await api.appendHistory(landId, year, cropName);
-      setSavedLands(prev => prev.map(l => ((l._id || l.id) === landId ? land : l)));
+      setSavedLands(prev => prev.map(l => ((l._id ?? l.id) === landId ? land : l)));
     } catch (err) {
       console.error("Failed to append history:", err);
       // Fallback local update
       setSavedLands(prev => prev.map(land => {
-        if ((land._id || land.id) === landId) {
+        if ((land._id ?? land.id) === landId) {
           return {
             ...land,
             history: [...land.history, { year, crop: cropName, status: "Harvested" }].sort((a, b) => a.year - b.year)
@@ -102,15 +102,26 @@ export function PlannerProvider({ children }) {
   const resetLandSeason = useCallback(async (landId) => {
     try {
       const { land } = await api.updateLand(landId, { currentCrop: "None", status: "Awaiting Crop" });
-      setSavedLands(prev => prev.map(l => ((l._id || l.id) === landId ? land : l)));
+      setSavedLands(prev => prev.map(l => ((l._id ?? l.id) === landId ? land : l)));
     } catch (err) {
       console.error("Failed to reset season:", err);
       setSavedLands(prev => prev.map(land => {
-        if ((land._id || land.id) === landId) {
+        if ((land._id ?? land.id) === landId) {
           return { ...land, currentCrop: 'None', status: 'Awaiting Crop' };
         }
         return land;
       }));
+    }
+  }, []);
+
+  const deleteSavedLand = useCallback(async (landId) => {
+    try {
+      await api.deleteLand(landId);
+      setSavedLands(prev => prev.filter(l => (l._id ?? l.id) !== landId));
+    } catch (err) {
+      console.error("Failed to delete land:", err);
+      // Fallback local delete
+      setSavedLands(prev => prev.filter(l => (l._id ?? l.id) !== landId));
     }
   }, []);
 
@@ -140,6 +151,7 @@ export function PlannerProvider({ children }) {
       addSavedLand,
       appendCropHistory,
       resetLandSeason,
+      deleteSavedLand,
     }),
     [
       crop,
@@ -157,6 +169,7 @@ export function PlannerProvider({ children }) {
       addSavedLand,
       appendCropHistory,
       resetLandSeason,
+      deleteSavedLand,
     ]
   );
 
