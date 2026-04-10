@@ -49,6 +49,7 @@ export default function DrawField({ points = [], onAddPoint }) {
         zoom={14}
         scrollWheelZoom={true}
         className="h-96 w-full"
+        style={{ cursor: "crosshair" }}
         ref={mapRef}
       >
         <TileLayer

@@ -33,3 +33,14 @@ body {
     linear-gradient(90deg, rgba(47, 159, 49, 0.08) 1px, transparent 1px);
   background-size: 26px 26px, 26px 26px;
 }
+
+/* Override Leaflet's default grab cursor for point-placement mode */
+.leaflet-container {
+  cursor: crosshair !important;
+}
+.leaflet-grab {
+  cursor: crosshair !important;
+}
+.leaflet-dragging .leaflet-grab {
+  cursor: grabbing !important;
+}
