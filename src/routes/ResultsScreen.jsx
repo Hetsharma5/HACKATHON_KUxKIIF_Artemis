@@ -11,6 +11,7 @@ import ActionPlanGenerator from "../components/ActionPlanGenerator";
 import { usePlannerStore } from "../hooks/usePlannerStore";
 import { useTranslation } from "../hooks/useTranslation";
 import { formatCurrency, formatNumber } from "../utils/format";
+import KisanSarthiChat from "../components/KisanSarthiChat";
 
 function ResultsScreen() {
   const navigate = useNavigate();
@@ -109,6 +110,16 @@ function ResultsScreen() {
             />
           </div>
         </div>
+
+        {/* KisanSarthi Local AI Chat */}
+        <KisanSarthiChat cropName={crop.name} fieldData={{
+          cropName: crop.name,
+          area: Math.round(estimates.areaSqM),
+          estimatedYield: Math.round(estimates.expectedYieldQuintal),
+          seedNeeds: Math.round(estimates.seedRequiredKg),
+          profit: Math.round(estimates.estimatedProfit)
+        }} />
+
 
         {/* Resource Blueprint */}
         <div className="mt-2">
